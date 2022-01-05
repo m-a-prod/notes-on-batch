@@ -3,7 +3,9 @@
 cls
 set r=set var=999
 title notes on batch
-if not exist "%appdata%\maprod\notes-on-batch\checklocal.maprod" goto start
+if not exist "%appdata%\maprod\notes-on-batch\checklocal.maprod" (
+	goto start 
+	)
 set /p checklocal=<"%appdata%\maprod\notes-on-batch\checklocal.maprod"
 if %checklocal% ==1 goto main
 if %checklocal% ==2 goto main
@@ -38,7 +40,7 @@ cls
 echo Creating a folder for storing notes
 md "%appdata%\maprod\notes-on-batch\"
 cd "%appdata%\maprod\notes-on-batch\"
-echo v>checklocal.maprod
+echo 0>checklocal.maprod
 goto main
 
 :webdavset
@@ -57,9 +59,10 @@ if %checklocal%==1 (
 	set checklocal=3
 	md "%appdata%\maprod\notes-on-batch\notes">nul
 	cd "%appdata%\maprod\notes-on-batch\notes"
-
+cls
 	)
 :: if %checklocal%==2 cd "%disk%\maprod\notes-on-batch\"
+cls
 echo Main menu
 echo.
 dir /b
