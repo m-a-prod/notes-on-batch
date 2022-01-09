@@ -40,7 +40,7 @@ cls
 echo Creating a folder for storing notes
 md "%appdata%\maprod\notes-on-batch\"
 cd "%appdata%\maprod\notes-on-batch\"
-echo 0>checklocal.maprod
+echo 01>checklocal.maprod
 goto main
 
 :webdavset
