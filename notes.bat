@@ -105,3 +105,23 @@ echo.
 echo Good luck to everyone!
 pause
 goto settings
+
+:createnote
+cls
+echo We haven't implemented this feature yet.
+echo Sorry :^(
+echo.
+echo 0. Back
+choice /c 0 /n
+if %errorlevel% == 1 goto main
+
+
+
+:editnote
+cls
+echo We haven't implemented this feature yet.
+echo Sorry :^(
+echo.
+echo 0. Back
+choice /c 0 /n
+if %errorlevel% == 1 goto main
