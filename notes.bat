@@ -81,12 +81,7 @@ if %var% == 0 exit
 :settings
 cls
 echo Settings
-
 echo 1. About me
-::2. Стереть все заметки и удалить следы пребывания
-::этой программы с хостинга.
-::3.Отвязать хост.(не смогу наверное реализовать) //net stop (maybe)
-
 echo 0. Back to main menu
 choice /c 01 /n
 if %errorlevel% == 1 goto main
@@ -103,7 +98,7 @@ echo.
 echo Thanks to Sasha Talk (he initiated me into this language)
 echo.
 echo Good luck to everyone!
-pause
+pause>nul
 goto settings
 
 :createnote
@@ -112,8 +107,8 @@ echo We haven't implemented this feature yet.
 echo Sorry :^(
 echo.
 echo 0. Back
-choice /c 0 /n
-if %errorlevel% == 1 goto main
+pause>nul
+goto main
 
 
 
@@ -123,5 +118,5 @@ echo We haven't implemented this feature yet.
 echo Sorry :^(
 echo.
 echo 0. Back
-choice /c 0 /n
-if %errorlevel% == 1 goto main
+pause>nul
+goto main
