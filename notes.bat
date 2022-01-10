@@ -3,12 +3,26 @@
 cls
 set r=set var=999
 title notes on batch
-if not exist "%appdata%\maprod\notes-on-batch\checklocal.maprod" (
-	goto start 
-	)
-set /p checklocal=<"%appdata%\maprod\notes-on-batch\checklocal.maprod"
-if %checklocal% ==1 goto main
-if %checklocal% ==2 goto main
+if exist "%appdata%\maprod\notes-on-batch\logininfo\" (goto fucerr) else (goto start)
+
+:fucerr 
+cls
+echo It does not work. Sorry...
+pause>nul
+goto webdavset
+
+:webdavconnect
+cls
+if exist "%appdata%\maprod\notes-on-batch\logininfo\yandex.maprod" (
+set /p user=<"%appdata%\maprod\notes-on-batch\logininfo\user.maprod"
+set /p password=<"%appdata%\maprod\notes-on-batch\logininfo\password.maprod"
+set /p letdisk=<"%appdata%\maprod\notes-on-batch\logininfo\letdisk.maprod"
+cls
+echo Connecting to the server...
+net use %letdisk%: https://webdav.yandex.ru "%password%" /USER:%user% >nul 2>&1
+echo OK
+pause>nul
+)
 
 :start
 cls
@@ -16,52 +30,73 @@ echo Hello! Thank you for downloading my program, I am very grateful to you!
 echo Enjoy your use! To let me know about the error, I created a repository
 echo on GitHub. https://github.com/maxim-adaev-production/notes
 pause>nul
-goto selectstorage
-
-:selectstorage
-cls
-if exist "%appdata%\maprod\notes-on-batch\checklocal.maprod" (
-set checklocal=1
-goto main
-) else (
-cls
-echo Select the storage method.
-echo.
-echo 1. Locally ^(faster, but only on this computer^)
-echo 2. On a WebDAV disk ^(slower, but you'll be able to use your notes
-echo on other computers^)^(soon^)
-choice /c 12 /n
-if %errorlevel% == 1 goto initlocalstorage
-if %errorlevel% == 2 goto webdavset
-)
-
-:initlocalstorage
-cls
-echo Creating a folder for storing notes
-md "%appdata%\maprod\notes-on-batch\"
-cd "%appdata%\maprod\notes-on-batch\"
-echo 01>checklocal.maprod
-goto main
+goto webdavset
 
 :webdavset
 cls
-echo We haven't implemented this feature yet.
-echo Sorry :^(
+echo Which host do you want to connect to?
+echo 1. Yandex Disk.
+echo 2. Other variant.
 echo.
-echo 0. Back
-pause>nul
-goto selectstorage
+echo TIP. If you want to see your favorite hosting in this menu,
+echo create an issue on the github of this project.
+echo.
+echo 3. Open the github page of this project.
+choice /c 123 /n
+if %errorlevel% == 1 goto fucerr
+if %errorlevel% == 2 goto fucerr
+if %errorlevel% == 3 start https://github.com/maxim-adaev-production/notes-on-batch
+::yandexset
+::otherset
+:yandexset
+cls
+md "%appdata%\maprod\notes-on-batch\">nul
+cd "%appdata%\maprod\notes-on-batch\"
+cls
+echo Configuring connection to Yandex Disk.
+echo. 
+set /p user=Enter the user name :
+md "%appdata%\maprod\notes-on-batch\logininfo"
+cd "%appdata%\maprod\notes-on-batch\logininfo"
+echo %user% >user.maprod
+cls
+echo Configuring connection to Yandex Disk.
+echo.
+echo The password is stored on your computer.
+echo We do not share your data with anyone!
+echo.
+set /p password=Enter the password :
+echo %password% >password.maprod
+set user=0
+set password=0
+echo yandexset >yandex.maprod
+cls
+echo Select a disk letter:
+echo O
+echo S
+echo T
+echo U
+echo V
+echo W
+echo X
+echo Y
+echo Z
+set /p letdisk=Type disk letter: 
+::If the user entered the drive letter incorrectly, the algorithm will automatically correct this error
+if %letdisk%==o set letdisk=O
+if %letdisk%==s set letdisk=S
+if %letdisk%==t set letdisk=T
+if %letdisk%==u set letdisk=U
+if %letdisk%==v set letdisk=V
+if %letdisk%==w set letdisk=W
+if %letdisk%==x set letdisk=X
+if %letdisk%==y set letdisk=Y
+if %letdisk%==z set letdisk=Z
+echo %letdisk% >letdisk.maprod
+goto init
 
 :main
 %r%
-cls
-if %checklocal%==1 (
-	set checklocal=3
-	md "%appdata%\maprod\notes-on-batch\notes">nul
-	cd "%appdata%\maprod\notes-on-batch\notes"
-cls
-	)
-:: if %checklocal%==2 cd "%disk%\maprod\notes-on-batch\"
 cls
 echo Main menu
 echo.
