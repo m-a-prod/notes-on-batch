@@ -72,7 +72,7 @@ echo 2. Edit note
 echo 3. Settings
 echo.
 echo 0. Exit
-set /p var=Input :
+set /p var=Enter some number or name of the note: 
 if %var% == 3 goto settings
 if %var% == 1 goto createnote
 if %var% == 2 goto editnote
