@@ -46,6 +46,7 @@ choice /c 123 /n
 if %errorlevel% == 1 goto fucerr
 if %errorlevel% == 2 goto fucerr
 if %errorlevel% == 3 start https://github.com/maxim-adaev-production/notes-on-batch
+goto webdavset
 ::yandexset
 ::otherset
 :yandexset
