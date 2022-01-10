@@ -15,7 +15,7 @@ cls
 echo Hello! Thank you for downloading my program, I am very grateful to you!
 echo Enjoy your use! To let me know about the error, I created a repository
 echo on GitHub. https://github.com/maxim-adaev-production/notes
-pause
+pause>nul
 goto selectstorage
 
 :selectstorage
@@ -49,8 +49,8 @@ echo We haven't implemented this feature yet.
 echo Sorry :^(
 echo.
 echo 0. Back
-choice /c 0 /n
-if %errorlevel% == 1 goto selectstorage
+pause>nul
+goto selectstorage
 
 :main
 %r%
@@ -105,8 +105,6 @@ goto settings
 cls
 echo We haven't implemented this feature yet.
 echo Sorry :^(
-echo.
-echo 0. Back
 pause>nul
 goto main
 
@@ -116,7 +114,5 @@ goto main
 cls
 echo We haven't implemented this feature yet.
 echo Sorry :^(
-echo.
-echo 0. Back
 pause>nul
 goto main
