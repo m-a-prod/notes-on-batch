@@ -95,12 +95,12 @@ if %errorlevel% == 2 goto faq
 :faq
 cls
 echo About me
-echo I am Maxim Adaev, a programmer, still studying. This is a project that I wrote
-echo purely for myself to train my programming skills
+echo I am Maxim Adaev, a programmer, still studying. This is a project that I coded
+echo just for myself to train my programming skills
 echo in a language like Batch. I will not deny that some techniques are taken from
 echo such a social network as Say Online. But the idea is mine (to make notes on the butch).
 echo.
-echo Gratitude to Sasha Talk(he initiated me into this language)
+echo Thanks to Sasha Talk (he initiated me into this language)
 echo.
 echo Good luck to everyone!
 pause
