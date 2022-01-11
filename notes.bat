@@ -17,25 +17,41 @@ echo.
 dir /b
 echo.
 echo 1. Create note
-echo 2. Edit note
-echo 3. Settings
+::echo 2. Edit note
+echo 2. Settings
 echo.
 echo 0. Exit
 set /p input=Enter some number or name of the note: 
-if %input% == 3 goto settings
+if %input% == 2 goto settings
 if %input% == 1 goto createnote
-if %input% == 2 goto editnote
-if %input% == 0 exit
+::if %input% == 999999 goto editnote
+if exist %appdata%\maprod\notes-on-batch\notes\%input% (
+set notenamenow=%input%
+goto noteview
+)
+
+:noteview
+::set %descriptionnow%=<%appdata%\maprod\notes-on-batch\notes\%notenamenow%
+cls
+
+echo Name:
+echo %notenamenow%
+::echo Description:
+::echo %descriptionnow%
+pause>nul
+set notenamenow=None 
+::set descriptionnow=None
+goto main
 
 :createnote
 %r%
 cls
-echo Creating a note
+echo Create the note
 echo.
 echo 1. Note Name -^> ^(%notename%^)
-echo 2. Description -^> ^(%noteDescription%^)
+::echo 2. Description -^> ^(%noteDescription%^)
 echo.
-echo 3. Save note
+echo 2. Save note
 echo 0. Back
 set /p input=Type some number : 
 if %input%==0 goto main
@@ -43,15 +59,15 @@ if %input%==1 (
 cls
 set /p notename=Type name for the note : 
 ) 
+::if %input%==2 (
+::cls
+::set /p noteDescription=Type description for the note : 
+::)
 if %input%==2 (
-cls
-set /p noteDescription=Type description for the note : 
-)
-if %input%==3 (
 cls
 echo Saving...
 cd "%appdata%\maprod\notes-on-batch\notes"
-echo %description%>notename.maprod
+echo %noteDescription% >%notename%
 goto main
 )
 goto createnote
@@ -68,6 +84,7 @@ goto main
 cls
 echo Settings
 echo 1. About me
+echo.
 echo 0. Back to main menu
 set /p input=Type some number : 
 if %input% == 1 goto faq
