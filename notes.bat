@@ -35,6 +35,7 @@ echo.
 echo 1. Note Name -^> ^(%notename%^)
 echo 2. Description -^> ^(%noteDescription%^)
 echo.
+echo 3. Save note
 echo 0. Back
 set /p input=Type some number : 
 if %input%==0 goto main
@@ -45,6 +46,13 @@ set /p notename=Type name for the note :
 if %input%==2 (
 cls
 set /p noteDescription=Type description for the note : 
+)
+if %input%==3 (
+cls
+echo Saving...
+cd "%appdata%\maprod\notes-on-batch\notes"
+echo %description%>notename.maprod
+goto main
 )
 goto createnote
 
