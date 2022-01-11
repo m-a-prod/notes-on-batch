@@ -28,11 +28,25 @@ if %input% == 2 goto editnote
 if %input% == 0 exit
 
 :createnote
+%r%
 cls
-echo We haven't implemented this feature yet.
-echo Sorry :^(
-pause>nul
-goto main
+echo Creating a note
+echo.
+echo 1. Note Name -^> ^(%notename%^)
+echo 2. Description -^> ^(%noteDescription%^)
+echo.
+echo 0. Back
+set /p input=Type some number : 
+if %input%==0 goto main
+if %input%==1 (
+cls
+set /p notename=Type name for the note : 
+) 
+if %input%==2 (
+cls
+set /p noteDescription=Type description for the note : 
+)
+goto createnote
 
 :editnote
 cls
