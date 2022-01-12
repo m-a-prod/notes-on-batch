@@ -29,6 +29,12 @@ if exist %appdata%\maprod\notes-on-batch\notes\%input% (
 set notenamenow=%input%
 goto noteview
 )
+if not exist %appdata%\maprod\notes-on-batch\notes\%input% (
+cls
+echo There is no note with that name
+pause>nul
+)
+goto main
 
 :noteview
 ::set %descriptionnow%=<%appdata%\maprod\notes-on-batch\notes\%notenamenow%
