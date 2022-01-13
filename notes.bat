@@ -95,6 +95,7 @@ echo 0. Back to main menu
 set /p input=Type some number : 
 if %input% == 1 goto faq
 if %input% == 0 goto main
+goto settings
 
 :faq
 cls
