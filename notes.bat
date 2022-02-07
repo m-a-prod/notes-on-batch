@@ -24,6 +24,7 @@ echo 0. Exit
 set /p input=Enter some number or name of the note: 
 if %input% == 2 goto settings
 if %input% == 1 goto createnote
+if %input%==sasha goto sasha
 ::if %input% == 999999 goto editnote
 if exist %appdata%\maprod\notes-on-batch\notes\%input% (
 set notenamenow=%input%
@@ -111,3 +112,8 @@ echo Good luck to everyone!
 pause>nul
 goto settings
 
+:sasha
+cls
+echo Thank you for introducing me to this truly wonderful programming language.
+pause>nul
+goto main
