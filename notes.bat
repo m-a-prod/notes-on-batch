@@ -3,15 +3,14 @@
 cls
 set r=set input=999
 title notes on batch
+set folder=%cd%
+set notename= 
 if not exist "C:\Users\m_a_p\AppData\Roaming\maprod\notes-on-batch" md "%appdata%\maprod\notes-on-batch"
-cd "%appdata%\maprod\notes-on-batch\"
 if not exist "%appdata%\maprod\notes-on-batch\notes" md "%appdata%\maprod\notes-on-batch\notes"
-goto main
-
 :main
 %r%
-cd "%appdata%\maprod\notes-on-batch\notes"
 cls
+cd "%appdata%\maprod\notes-on-batch\notes"
 echo Main menu
 echo.
 dir /b
@@ -21,32 +20,38 @@ echo 1. Create note
 echo 2. Settings
 echo.
 echo 0. Exit
-set /p input=Enter some number or name of the note: 
-if %input% == 2 goto settings
-if %input% == 1 goto createnote
-if %input%==sasha goto sasha
-::if %input% == 999999 goto editnote
-if exist %appdata%\maprod\notes-on-batch\notes\%input% (
-set notenamenow=%input%
-goto noteview
+set /p input=Enter some number or name of the note : 
+if "%input%"=="1" goto createnote
+if "%input%"=="2" goto settings
+if "%input%"=="0" (
+    cls
+    cd %folder%
+    echo Thanks for using!
+    :: This message will be displayed only if notes.bat started from shell.
+    goto :eof
 )
-if not exist %appdata%\maprod\notes-on-batch\notes\%input% (
-cls
-echo There is no note with that name
-pause>nul
+if "%input%"=="sasha" goto sasha
+::if %input%==999 goto editnote
+if exist "%appdata%\maprod\notes-on-batch\notes\%input%" (
+    set notenamenow=%input%
+    goto noteview
+) else (
+    call :error "There is no note with that name"
 )
 goto main
 
 :noteview
-::set %descriptionnow%=<%appdata%\maprod\notes-on-batch\notes\%notenamenow%
+::set /p descriptionnow=<"%appdata%\maprod\notes-on-batch\notes\%notenamenow%"
+%r%
 cls
-
-echo Name:
-echo %notenamenow%
-::echo Description:
-::echo %descriptionnow%
+echo Note view
+echo.
+echo Name: %notenamenow%
+echo.
+echo ENTER. OK
+::echo Description: %descriptionnow%
 pause>nul
-set notenamenow=None 
+set notenamenow=None
 ::set descriptionnow=None
 goto main
 
@@ -55,65 +60,75 @@ goto main
 cls
 echo Create the note
 echo.
-echo 1. Note Name -^> ^(%notename%^)
+echo 1. Note Name: %notename%
 ::echo 2. Description -^> ^(%noteDescription%^)
 echo.
 echo 2. Save note
 echo 0. Back
 set /p input=Type some number : 
-if %input%==0 goto main
-if %input%==1 (
-cls
-set /p notename=Type name for the note : 
+if "%input%"=="1" (
+    cls
+    echo Create the note
+    echo.
+    set /p notename=1. Note Name: 
 ) 
+if "%input%"=="2" (
+    cls
+    echo Saving...
+    cd "%appdata%\maprod\notes-on-batch\notes"
+    echo %noteDescription% >"%notename%"
+    goto main
+)
+if "%input%"=="0" goto main
 ::if %input%==2 (
 ::cls
 ::set /p noteDescription=Type description for the note : 
 ::)
-if %input%==2 (
-cls
-echo Saving...
-cd "%appdata%\maprod\notes-on-batch\notes"
-echo %noteDescription% >%notename%
-goto main
-)
 goto createnote
 
 :editnote
-cls
-echo We haven't implemented this feature yet.
-echo Sorry :^(
-pause>nul
+call :error "This feature has not yet been implemented."
 goto main
 
 :settings
 %r%
 cls
 echo Settings
+echo.
 echo 1. About me
 echo.
 echo 0. Back to main menu
 set /p input=Type some number : 
-if %input% == 1 goto faq
-if %input% == 0 goto main
+if "%input%"=="1" goto faq
+if "%input%"=="0" goto main
 goto settings
 
 :faq
 cls
 echo About me
-echo I am Maxim Adaev, a programmer, still studying. This is a project that I coded
-echo just for myself to train my programming skills
-echo in a language like Batch. I will not deny that some techniques are taken from
-echo such a social network as Say Online. But the idea is mine (to make notes on the butch).
 echo.
-echo Thanks to Sasha Talk (he initiated me into this language)
+echo I am Maxim Adaev - an still studying programmer. This is a project that I coded
+echo just for myself to train my programming skills in a language like Batch. I will
+echo not deny that some techniques are taken from the social network Say Online, but
+echo the idea to make notes on the Batch is mine.
+echo.
+echo Thanks to Sasha Talk for bringing me to this language.
 echo.
 echo Good luck to everyone!
+echo.
+echo ENTER. OK
 pause>nul
 goto settings
 
 :sasha
-cls
-echo Thank you for introducing me to this truly wonderful programming language.
-pause>nul
+call :error "Thank you for introducing me to this truly wonderful programming language."
+:: You're welcome
 goto main
+
+:error
+cls
+echo %~1
+echo.
+echo ENTER. OK
+pause>nul
+goto :eof
