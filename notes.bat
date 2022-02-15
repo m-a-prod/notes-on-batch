@@ -5,7 +5,7 @@ set r=set input=999
 title notes on batch
 set folder=%cd%
 set notename= 
-if not exist "C:\Users\m_a_p\AppData\Roaming\maprod\notes-on-batch" md "%appdata%\maprod\notes-on-batch"
+if not exist "%appdata%\maprod\notes-on-batch" md "%appdata%\maprod\notes-on-batch"
 if not exist "%appdata%\maprod\notes-on-batch\notes" md "%appdata%\maprod\notes-on-batch\notes"
 :main
 %r%
@@ -16,7 +16,6 @@ echo.
 dir /b
 echo.
 echo 1. Create note
-::echo 2. Edit note
 echo 2. Settings
 echo.
 echo 0. Exit
@@ -27,11 +26,9 @@ if "%input%"=="0" (
     cls
     cd %folder%
     echo Thanks for using!
-    :: This message will be displayed only if notes.bat started from shell.
     goto :eof
 )
 if "%input%"=="sasha" goto sasha
-::if %input%==999 goto editnote
 if exist "%appdata%\maprod\notes-on-batch\notes\%input%" (
     set notenamenow=%input%
     goto noteview
@@ -41,7 +38,6 @@ if exist "%appdata%\maprod\notes-on-batch\notes\%input%" (
 goto main
 
 :noteview
-::set /p descriptionnow=<"%appdata%\maprod\notes-on-batch\notes\%notenamenow%"
 %r%
 cls
 echo Note view
@@ -49,10 +45,8 @@ echo.
 echo Name: %notenamenow%
 echo.
 echo ENTER. OK
-::echo Description: %descriptionnow%
 pause>nul
 set notenamenow=None
-::set descriptionnow=None
 goto main
 
 :createnote
@@ -61,7 +55,6 @@ cls
 echo Create the note
 echo.
 echo 1. Note Name: %notename%
-::echo 2. Description -^> ^(%noteDescription%^)
 echo.
 echo 2. Save note
 echo 0. Back
@@ -80,10 +73,6 @@ if "%input%"=="2" (
     goto main
 )
 if "%input%"=="0" goto main
-::if %input%==2 (
-::cls
-::set /p noteDescription=Type description for the note : 
-::)
 goto createnote
 
 :editnote
@@ -122,7 +111,6 @@ goto settings
 
 :sasha
 call :error "Thank you for introducing me to this truly wonderful programming language."
-:: You're welcome
 goto main
 
 :error
